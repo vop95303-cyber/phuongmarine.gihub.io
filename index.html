@@ -35,12 +35,13 @@
         .card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .card h3 { font-size: 18px; color: #1a252f; margin-bottom: 12px; }
         .card p { font-size: 14px; color: #7f8c8d; margin-bottom: 20px; flex-grow: 1; text-align: justify; }
+        .tech-specs { font-size: 12px; color: #34495e; background: #f8f9fa; padding: 8px; border-radius: 4px; margin-bottom: 15px; border-left: 3px solid #2ecc71; }
         .price { font-weight: bold; color: #e74c3c; font-size: 16px; margin-bottom: 15px; }
         
         /* Hệ thống Nút bấm */
-        .btn { display: inline-block; background-color: #3498db; color: white; padding: 11px 20px; text-align: center; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 600; transition: background 0.3s; border: none; cursor: pointer; }
+        .btn { display: inline-block; background-color: #3498db; color: white; padding: 11px 20px; text-align: center; text-decoration: none; border-radius: 4px; font-size: 14px; font-weight: 600; transition: background 0.3s; border: none; cursor: pointer; width: 100%; }
         .btn:hover { background-color: #2980b9; }
-        .btn-danger { background-color: #e74c3c; color: white; }
+        .btn-danger { background-color: #e74c3c; color: white; width: auto; }
         .btn-danger:hover { background-color: #c0392b; }
 
         /* Khối hiển thị Danh sách */
@@ -50,8 +51,16 @@
         .project-list li:last-child, .activity-list li:last-child { border-bottom: none; }
         .badge { background: #e8f4fd; color: #3498db; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 12px; shrink: 0; white-space: nowrap; }
 
-        /* Khối không gian 3D */
-        .placeholder-3d { text-align: center; padding: 50px 20px; background: #eaedf1; border-radius: 6px; border: 1px solid #e1e8ed; }
+        /* Khối không gian 3D CSS Tạm thời */
+        .placeholder-3d { text-align: center; padding: 40px 20px; background: #eaedf1; border-radius: 6px; border: 1px solid #e1e8ed; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 250px; }
+        .cube-container { width: 80px; height: 120px; perspective: 400px; margin-bottom: 20px; }
+        .cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: rotateCube 8s infinite linear; }
+        .cube-face { position: absolute; width: 80px; height: 120px; border: 2px solid #34495e; background: rgba(52, 152, 219, 0.7); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; }
+        .cube-face.front  { transform: rotateY(  0deg) translateZ(40px); background: rgba(44, 62, 80, 0.8); border-right: 4px solid #f1c40f; }
+        .cube-face.back   { transform: rotateY(180deg) translateZ(40px); }
+        .cube-face.right  { width: 80px; transform: rotateY( 90deg) translateZ(40px); }
+        .cube-face.left   { width: 80px; transform: rotateY(-90deg) translateZ(40px); }
+        @keyframes rotateCube { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 
         /* Vùng Liên Hệ & Form */
         .contact-section { background: #fff; border: 1px solid #e1e8ed; padding: 40px 20px; border-radius: 8px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
@@ -64,6 +73,8 @@
         .form-group label { display: block; color: #334155; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
         .form-group input, .form-group textarea { width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #cbd5e1; background: #fff; color: #1e293b; font-size: 14px; transition: border-color 0.2s; }
         .form-group input:focus, .form-group textarea:focus { border-color: #3498db; outline: none; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15); }
+
+        .contact-btn { background-color: #0068ff; color: white; margin-top: 15px; display: block; }
 
         /* Trạng thái thông báo gửi Form */
         #form-status { margin-bottom: 20px; padding: 12px; border-radius: 4px; font-size: 14px; font-weight: 600; display: none; text-align: center; }
@@ -79,8 +90,10 @@
             .nav-menu { gap: 12px; flex-wrap: wrap; justify-content: center; }
             .grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 24px; }
+            .hero { padding: 50px 0; }
             .project-list li { flex-direction: column; gap: 6px; }
             .contact-form { padding: 20px; }
+            .btn-danger { width: 100%; }
         }
     </style>
 </head>
@@ -105,7 +118,7 @@
         <section class="hero" id="tong-quan">
             <div class="container">
                 <h1>Hệ Thống Thiết Kế & Cung Cấp Tủ Điện Tàu Thủy</h1>
-                <p>Chuyên tư vấn, lên dự toán và thiết kế các loại tủ điện phân phối, tủ điện điều khiển chính xác theo tiêu chuẩn quy phạm định hướng kỹ thuật tàu thủy.</p>
+                <p>Chuyên tư vấn, lên dự toán và thiết kế các loại tủ điện phân phối, tủ điện điều khiển chính xác theo tiêu chuẩn Đăng kiểm (VR) định hướng kỹ thuật tàu thủy.</p>
                 <a href="#lien-he" class="btn btn-danger" style="font-weight: bold;">Yêu Cầu Báo Giá Ngay</a>
             </div>
         </section>
@@ -118,6 +131,7 @@
                         <div>
                             <h3>Hệ Thống Phân Phối Điện Tổng Thể Tàu Thủy</h3>
                             <p>Bao gồm trọn gói từ Tủ điện chính (Main Switchboard) tích hợp hệ thống quản lý nguồn (PMS), hòa đồng bộ tự động, bảo vệ máy phát, cho đến mạng lưới các Tủ phân phối vùng (DB), tủ phân phối chiếu sáng, điều hòa và cứu hỏa trên tàu.</p>
+                            <div class="tech-specs">⚙️ Tiêu chuẩn: IEC 60092 | Thử nghiệm Đăng kiểm VR</div>
                         </div>
                         <div>
                             <div class="price">Giá: Liên hệ khảo sát cấu hình</div>
@@ -127,7 +141,8 @@
                     <div class="card">
                         <div>
                             <h3>Tủ Điện Chức Năng & Điều Khiển Chuyên Dụng</h3>
-                            <p>Dành cho các đơn vị chỉ có nhu cầu đặt hàng riêng lẻ hoặc bổ sung thiết bị nâng cấp: Tủ điều khiển bơm/quạt khởi động trực tiếp/sao-tam giác, tủ biến tần, hệ thống báo động chung (General Alarm), tủ nạp ắc quy tự động, hoặc tủ điện đạt chuẩn IP cao chống nước biển cho boong hở.</p>
+                            <p>Dành cho các đơn vị có nhu cầu đặt hàng riêng lẻ hoặc nâng cấp thiết bị: Tủ điều khiển bơm/quạt khởi động trực tiếp/sao-tam giác, tủ biến tần, hệ thống báo động chung (General Alarm), tủ nạp ắc quy tự động, hoặc tủ điện đạt chuẩn IP cao chống nước biển cho boong hở.</p>
+                            <div class="tech-specs">⚙️ Cấp bảo vệ: IP22 (Buồng máy) / IP56 (Boong hở)</div>
                         </div>
                         <div>
                             <div class="price">Giá: Tùy biến theo bản vẽ thiết kế</div>
@@ -142,7 +157,15 @@
             <div class="container">
                 <h2 class="section-title">Không Gian Mô Hình 3D Tương Tác</h2>
                 <div class="placeholder-3d">
-                    <p style="color: #7f8c8d; font-style: italic;">[ Hệ thống đang cấu hình dữ liệu vẽ kỹ thuật. Các mô hình tương tác 3D của tủ điện (SketchUp/Inventor) sẽ sớm được hiển thị trực quan tại đây để khách hàng tự do xoay, phóng to xem kết cấu vỏ và bố trí linh kiện bên trong. ]</p>
+                    <div class="cube-container">
+                        <div class="cube">
+                            <div class="cube-face front">MSB</div>
+                            <div class="cube-face back">VR</div>
+                            <div class="cube-face right">IP22</div>
+                            <div class="cube-face left">PMS</div>
+                        </div>
+                    </div>
+                    <p style="color: #7f8c8d; font-style: italic; font-size: 14px; max-width:600px;">[ Hệ thống đang cấu hình dữ liệu vẽ kỹ thuật. Các mô hình tương tác 3D của tủ điện (SketchUp/Inventor) sẽ sớm được hiển thị trực quan tại đây để khách hàng tự do xoay, phóng to xem kết cấu vỏ và bố trí linh kiện bên trong. ]</p>
                 </div>
             </div>
         </section>
@@ -210,11 +233,11 @@
 
                                 <div id="form-status"></div>
 
-                                <button type="submit" id="submit-btn" class="btn btn-danger" style="width: 100%; padding: 12px; font-weight: bold;">
+                                <button type="submit" id="submit-btn" class="btn btn-danger" style="width: 100%; padding: 12px; font-weight: bold; display: block;">
                                     🚀 Gửi Yêu Cầu Tư Vấn
                                 </button>
                             </form>
-                            <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn contact-btn" style="background-color: #0068ff; color: white;">💬 Chat Qua Zalo Hoặc Gọi Trực Tiếp</a>
+                            <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn contact-btn">💬 Chat Qua Zalo Hoặc Gọi Trực Tiếp</a>
                         </div>
                     </div>
                 </div>
