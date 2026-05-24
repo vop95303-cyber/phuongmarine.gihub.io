@@ -34,13 +34,44 @@
         section { scroll-margin-top: 80px; padding: 60px 0; }
         .section-title { font-size: 24px; color: #2c3e50; margin-bottom: 25px; padding-left: 10px; border-left: 5px solid #3498db; }
         
-        /* Grid Sản phẩm nâng cấp thêm bọc ảnh */
+        /* --- CSS CHO SLIDER ẢNH CHẠY NGANG --- */
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e1e8ed;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .slider-track {
+            display: flex;
+            gap: 15px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slider-item {
+            min-width: calc(25% - 12px); /* Hiển thị 4 ảnh cùng lúc trên màn hình máy tính */
+            height: 180px;
+            overflow: hidden;
+            border-radius: 6px;
+            background-color: #eaedf1;
+            border: 1px solid #f0f2f5;
+        }
+        .slider-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .slider-item img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Grid Sản phẩm (Đã loại bỏ chiều cao ảnh cũ để tập trung vào thông tin card) */
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
         .card { background: white; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; overflow: hidden; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .card-img-wrapper { width: 100%; height: 220px; overflow: hidden; background-color: #eaedf1; }
-        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .card:hover .card-img-wrapper img { transform: scale(1.05); }
         .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         
         .card h3 { font-size: 19px; color: #1a252f; margin-bottom: 12px; }
@@ -98,8 +129,8 @@
         @media (max-width: 768px) {
             .nav-container { flex-direction: column; gap: 15px; padding: 15px 10px; }
             .nav-menu { gap: 12px; flex-wrap: wrap; justify-content: center; }
+            .slider-item { min-width: calc(50% - 8px); height: 130px; } /* Mobile hiển thị 2 ảnh */
             .grid { grid-template-columns: 1fr; }
-            .card-img-wrapper { height: 180px; }
             .hero h1 { font-size: 26px; }
             .hero { padding: 60px 0; }
             .project-list li { flex-direction: column; gap: 6px; }
@@ -137,13 +168,26 @@
         <section id="san-pham">
             <div class="container">
                 <h2 class="section-title">Danh Mục Sản Phẩm Kinh Doanh</h2>
+                
+                <!-- KHU VỰC LIST ẢNH CHẠY NGANG (SLIDER) -->
+                <div class="slider-container">
+                    <div class="slider-track" id="sliderTrack">
+                        <div class="slider-item"><img src="images/busbar.jpg" alt="Hệ thống thanh cái"></div>
+                        <div class="slider-item"><img src="images/dk.jpg" alt="Mạch điều khiển"></div>
+                        <div class="slider-item"><img src="images/dkvacanh.jpg" alt="Mạch điều khiển và cánh tủ"></div>
+                        <div class="slider-item"><img src="images/nganphutai.jpg" alt="Ngăn phụ tải"></div>
+                        <div class="slider-item"><img src="images/phutainganphutai.jpg" alt="Phụ tải tủ điện"></div>
+                        <div class="slider-item"><img src="images/tn.jpg" alt="Tủ nguồn"></div>
+                        <div class="slider-item"><img src="images/tn1.jpg" alt="Chi tiết tủ nguồn"></div>
+                        <div class="slider-item"><img src="images/toantu.jpg" alt="Tổng quan toàn tủ"></div>
+                        <div class="slider-item"><img src="images/trongnganphutai.jpg" alt="Bên trong ngăn phụ tải"></div>
+                    </div>
+                </div>
+
+                <!-- 2 CARD CHI TIẾT SẢN PHẨM (ĐÃ BỎ MÃ <IMG CŨ) -->
                 <div class="grid">
                     <!-- Sản phẩm 1 -->
                     <div class="card">
-                        <div class="card-img-wrapper">
-                            <!-- Thay thế src bằng đường dẫn ảnh hệ thống MSB thực tế của bạn -->
-                            <img src="images/msb-system.jpg" alt="Hệ thống tủ điện chính tàu thủy MSB" onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80'">
-                        </div>
                         <div class="card-content">
                             <div>
                                 <h3>Hệ Thống Phân Phối Điện Tổng Thể Tàu Thủy</h3>
@@ -158,10 +202,6 @@
                     </div>
                     <!-- Sản phẩm 2 -->
                     <div class="card">
-                        <div class="card-img-wrapper">
-                            <!-- Thay thế src bằng đường dẫn ảnh tủ chức năng thực tế của bạn -->
-                            <img src="images/control-panel.jpg" alt="Tủ điện chức năng điều khiển tàu thủy" onerror="this.src='https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80'">
-                        </div>
                         <div class="card-content">
                             <div>
                                 <h3>Tủ Điện Chức Năng & Điều Khiển Chuyên Dụng</h3>
@@ -276,6 +316,41 @@
     </footer>
 
     <script>
+        // --- LOGIC HOẠT ĐỘNG SLIDER CHẠY ẢNH TỰ ĐỘNG ---
+        const track = document.getElementById('sliderTrack');
+        let index = 0;
+
+        function moveSlider() {
+            const items = document.querySelectorAll('.slider-item');
+            const totalItems = items.length;
+            
+            // Tính số lượng ảnh hiển thị đồng thời tùy theo độ rộng màn hình
+            const itemsPerScreen = window.innerWidth <= 768 ? 2 : 4;
+            const maxIndex = totalItems - itemsPerScreen;
+
+            index++;
+            if (index > maxIndex) {
+                index = 0; // Quay trở lại ảnh đầu tiên nếu chạy hết hàng
+            }
+
+            // Tính toán khoảng cách dịch chuyển bao gồm cả độ rộng thẻ và thuộc tính Gap (khoảng cách giữa các ảnh)
+            const itemWidth = items[0].getBoundingClientRect().width;
+            const gap = window.innerWidth <= 768 ? 16 : 15;
+            const amountToMove = index * (itemWidth + gap);
+
+            track.style.transform = `translateX(-${amountToMove}px)`;
+        }
+
+        // Tự động kích hoạt dịch chuyển sau mỗi 3 giây (3000 mili giây)
+        setInterval(moveSlider, 3000);
+
+        // Đảm bảo slider không bị lệch khi người dùng co giãn trình duyệt
+        window.addEventListener('resize', () => {
+            index = 0;
+            track.style.transform = `translateX(0px)`;
+        });
+
+        // --- SCRIPT XỬ LÝ FORM ĐĂNG KÝ CŨ ---
         const form = document.getElementById("ajax-contact-form");
         const status = document.getElementById("form-status");
         const submitBtn = document.getElementById("submit-btn");
@@ -301,7 +376,6 @@
                     status.className = "success";
                     form.reset(); 
                     
-                    // Tự động ẩn thông báo thành công sau 4 giây
                     setTimeout(() => {
                         status.className = "";
                         status.style.display = "none";
