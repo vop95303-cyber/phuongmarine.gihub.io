@@ -18,17 +18,16 @@
         header { background-color: #1a252f; color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
         
-        /* ĐÃ CẤU HÌNH CSS ĐỂ LOGO VÀ CHỮ CĂN THẲNG HÀNG */
         .logo { 
             font-size: 20px; 
             font-weight: bold; 
             color: #3498db; 
             display: flex;
             align-items: center;
-            gap: 10px; /* Khoảng cách giữa ảnh logo và chữ */
+            gap: 10px; 
         }
         .logo img {
-            height: 35px; /* Giới hạn chiều cao logo hợp lý trên thanh header */
+            height: 35px; 
             width: auto;
             object-fit: contain;
         }
@@ -70,7 +69,7 @@
             transition: transform 0.5s ease-in-out;
         }
         .slider-item {
-            min-width: calc(25% - 12px); /* Hiển thị 4 ảnh cùng lúc trên màn hình máy tính */
+            min-width: calc(25% - 12px); 
             height: 180px;
             overflow: hidden;
             border-radius: 6px;
@@ -103,12 +102,80 @@
         .btn:hover { background-color: #2980b9; }
         .btn-danger { background-color: #e74c3c; color: white; width: auto; }
         .btn-danger:hover { background-color: #c0392b; }
+        
+        /* --- GIAO DIỆN LƯỚI KHÔNG GIAN MÔ HÌNH 3D --- */
+        .grid-3d { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+            width: 100%;
+            margin-top: 20px;
+        }
+        .card-3d { 
+            background: white; 
+            border-radius: 8px; 
+            border: 1px solid #e1e8ed; 
+            overflow: hidden; 
+            text-decoration: none; 
+            color: inherit; 
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05); 
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-3d:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+        }
+        .img-container-3d {
+            width: 100%;
+            height: 200px;
+            background-color: #eaedf1;
+            overflow: hidden;
+            position: relative;
+        }
+        .img-container-3d img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .card-3d:hover .img-container-3d img {
+            transform: scale(1.05);
+        }
+        .badge-3d {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(26, 37, 47, 0.85);
+            color: #3498db;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            border: 1px solid #3498db;
+        }
+        .info-3d { 
+            padding: 15px; 
+            text-align: center; 
+            background: #fff;
+            border-top: 1px solid #f0f2f5;
+        }
+        .info-3d h3 { 
+            font-size: 16px; 
+            color: #1a252f; 
+            margin-bottom: 5px;
+        }
+        .info-3d span {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
 
         /* --- CSS CHO KHỐI DỰ ÁN CUỘN DỌC TỰ ĐỘNG --- */
         .box-full { background: white; padding: 25px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; }
         
         .project-marquee-container {
-            height: 280px; /* Khống chế chiều cao cố định để web không bị dài */
+            height: 280px; 
             overflow: hidden;
             position: relative;
             background: #fff;
@@ -120,10 +187,9 @@
             width: 100%;
             top: 0;
             left: 0;
-            animation: scrollVertical 35s linear infinite; /* Chạy dọc tự động */
+            animation: scrollVertical 35s linear infinite; 
         }
         
-        /* Khi di chuột qua danh sách, hoạt ảnh cuộn sẽ tạm dừng */
         .project-marquee-container:hover .project-list {
             animation-play-state: paused;
         }
@@ -139,26 +205,15 @@
         
         @keyframes scrollVertical {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-66%); } /* Trượt dần lên trên */
+            100% { transform: translateY(-66%); } 
         }
 
-        /* Khối hoạt động ngoại khóa giữ nguyên */
+        /* Khối hoạt động ngoại khóa */
         .activity-list { list-style: none; }
         .activity-list li { padding: 14px 0; border-bottom: 1px dashed #e1e8ed; display: flex; align-items: flex-start; font-size: 15px; }
         .activity-list li:last-child { border-bottom: none; }
         
         .badge { background: #e8f4fd; color: #3498db; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 12px; shrink: 0; white-space: nowrap; width: 130px; text-align: center; }
-
-        /* Khối không gian 3D CSS */
-        .placeholder-3d { text-align: center; padding: 40px 20px; background: #eaedf1; border-radius: 6px; border: 1px solid #e1e8ed; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 250px; }
-        .cube-container { width: 80px; height: 120px; perspective: 400px; margin-bottom: 20px; }
-        .cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: rotateCube 8s infinite linear; }
-        .cube-face { position: absolute; width: 80px; height: 120px; border: 2px solid #34495e; background: rgba(52, 152, 219, 0.7); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; }
-        .cube-face.front  { transform: rotateY(  0deg) translateZ(40px); background: rgba(44, 62, 80, 0.8); border-right: 4px solid #f1c40f; }
-        .cube-face.back   { transform: rotateY(180deg) translateZ(40px); }
-        .cube-face.right  { width: 80px; transform: rotateY( 90deg) translateZ(40px); }
-        .cube-face.left   { width: 80px; transform: rotateY(-90deg) translateZ(40px); }
-        @keyframes rotateCube { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 
         /* Vùng Liên Hệ & Form */
         .contact-section { background: #fff; border: 1px solid #e1e8ed; padding: 40px 20px; border-radius: 8px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
@@ -174,7 +229,6 @@
 
         .contact-btn { background-color: #0068ff; color: white; margin-top: 15px; display: block; }
 
-        /* Trạng thái thông báo gửi Form */
         #form-status { margin-bottom: 20px; padding: 12px; border-radius: 4px; font-size: 14px; font-weight: 600; display: none; text-align: center; }
         #form-status.success { display: block !important; background-color: #d1fae5; color: #065f46; border: 1px solid #10b981; }
         #form-status.error { display: block !important; background-color: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
@@ -201,7 +255,6 @@
 
     <header>
         <div class="nav-container">
-            <!-- 2. ĐÃ SỬA DÒNG 185: CHÈN ẢNH LOGO VÀO CẠNH CHỮ KHANH HUYEN -->
             <div class="logo">
                 <img src="image/lolo.jpg" alt="Logo">
                 CÔNG TY CP THƯƠNG MẠI VÀ SẢN XUẤT KHÁNH HUYỀN
@@ -283,16 +336,20 @@
         <section id="mo-hinh-3d">
             <div class="container">
                 <h2 class="section-title">Không Gian Mô Hình 3D Tương Tác</h2>
-                <div class="placeholder-3d">
-                    <div class="cube-container">
-                        <div class="cube">
-                            <div class="cube-face front">MSB</div>
-                            <div class="cube-face back">VR</div>
-                            <div class="cube-face right">IP22</div>
-                            <div class="cube-face left">PMS</div>
+                <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 20px;">Click vào mô hình bạn quan tâm để mở không gian tương tác 3D (xoay, phóng to, bóc tách linh kiện) trực tiếp từ bản vẽ kỹ thuật Inventor.</p>
+                
+                <div class="grid-3d">
+                    <!-- MÔ HÌNH: TỦ NẠP -->
+                    <a href="https://autode.sk/4dJTsk1" target="_blank" rel="noopener noreferrer" class="card-3d">
+                        <div class="img-container-3d">
+                            <img src="image/TUNAP.png" alt="Mô hình 3D Tủ Nạp">
+                            <div class="badge-3d">⟳ Xoay 3D</div>
                         </div>
-                    </div>
-                    <p style="color: #7f8c8d; font-style: italic; font-size: 14px; max-width:600px;">[ Hệ thống đang cấu hình dữ liệu vẽ kỹ thuật. Các mô hình tương tác 3D của tủ điện (SketchUp/Inventor) sẽ sớm được hiển thị trực quan tại đây để khách hàng tự do xoay, phóng to xem kết cấu vỏ và bố trí linh kiện bên trong. ]</p>
+                        <div class="info-3d">
+                            <h3>TỦ NẠP ẮC QUY TỰ ĐỘNG</h3>
+                            <span>Xem kết cấu 3D & Linh kiện</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -301,7 +358,6 @@
             <div class="container">
                 <h2 class="section-title">Các Dự Án Đã Thực Hiện</h2>
                 <div class="box-full">
-                    <!-- KHU VỰC MARQUEE CUỘN DỌC TỰ ĐỘNG -->
                     <div class="project-marquee-container" id="projectMarquee">
                         <ul class="project-list" id="projectList">
                             <li><span class="badge">Tàu CTT24-45</span><span>Hoàn thiện thiết kế hệ thống tủ điều khiển tích hợp cảnh báo sự cố kỹ thuật tập trung hàng hải.</span></li>
@@ -383,7 +439,6 @@
 
     <footer>
         <p>&copy; 2026 KHANH HUYEN. Thiết kế hệ thống điện và cơ khí tàu thủy chuyên nghiệp.</p>
-        
     </footer>
 
     <script>
