@@ -519,57 +519,68 @@
     </footer>
 
     <script>
-        // --- LOGIC NHÂN BẢN SLIDER ẢNH CHẠY VÔ HẠN (ĐÃ FIX KHÔNG KHỰNG HÌNH) ---
-        const sliderTrack = document.getElementById('sliderTrack');
-        if (sliderTrack) {
-            sliderTrack.innerHTML += sliderTrack.innerHTML;
-        }
+        // --- LOGIC NHÂN BẢN AN TOÀN KHI TOÀN BỘ TRANG ĐÃ TẢI XONG ---
+        window.addEventListener('load', function() {
+            const sliderTrack = document.getElementById('sliderTrack');
+            if (sliderTrack) {
+                sliderTrack.innerHTML += sliderTrack.innerHTML;
+            }
 
-        // --- NHÂN BẢN NỘI DUNG LIST DỰ ÁN ĐỂ CHẠY LIÊN TỤC KHÔNG BỊ KHOẢNG TRỐNG ---
-        const list = document.getElementById('projectList');
-        if (list) {
-            list.innerHTML += list.innerHTML; 
-        }
+            const list = document.getElementById('projectList');
+            if (list) {
+                list.innerHTML += list.innerHTML; 
+            }
+        });
 
-        // --- SCRIPT XỬ LÝ FORM ĐĂNG KÝ QUA FORMSPREE ---
+        // --- SCRIPT XỬ LÝ FORM ĐĂNG KÝ QUA FORMSPREE NÂNG CAO THAO TÁC USER ---
         const form = document.getElementById("ajax-contact-form");
         const status = document.getElementById("form-status");
         const submitBtn = document.getElementById("submit-btn");
 
-        form.addEventListener("submit", function(event) {
-            event.preventDefault(); 
-            submitBtn.disabled = true;
-            submitBtn.innerText = "⏳ Đang gửi yêu cầu...";
-            status.className = ""; 
-            status.style.display = "none";
-            const data = new FormData(form);
-            
-            fetch(form.action, {
-                method: form.method,
-                body: data,
-                headers: { 'Accept': 'application/json' }
-            })
-            .then(response => {
-                if (response.ok) {
-                    status.innerText = "🚀 Gửi thành công! Chúng tôi sẽ liên hệ lại ngay qua Số điện thoại/Zalo.";
-                    status.className = "success";
-                    form.reset(); 
-                    setTimeout(() => { status.className = ""; status.style.display = "none"; }, 4000);
-                } else {
-                    status.innerText = "❌ Gửi yêu cầu thất bại. Vui lòng kiểm tra lại thông tin hoặc thử lại sau.";
+        if (form) {
+            form.addEventListener("submit", function(event) {
+                event.preventDefault(); 
+                
+                // Khóa nút bấm và các ô dữ liệu để chống double-submit
+                submitBtn.disabled = true;
+                submitBtn.innerText = "⏳ Đang gửi yêu cầu...";
+                
+                const formElements = form.querySelectorAll("input, textarea");
+                formElements.forEach(el => el.disabled = true);
+                
+                status.className = ""; 
+                status.style.display = "none";
+                const data = new FormData(form);
+                
+                fetch(form.action, {
+                    method: form.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        status.innerText = "🚀 Gửi thành công! Chúng tôi sẽ liên hệ lại ngay qua Số điện thoại/Zalo.";
+                        status.className = "success";
+                        form.reset(); 
+                        setTimeout(() => { status.className = ""; status.style.display = "none"; }, 5000);
+                    } else {
+                        status.innerText = "❌ Gửi yêu cầu thất bại. Vui lòng kiểm tra lại thông tin hoặc thử lại sau.";
+                        status.className = "error";
+                    }
+                })
+                .catch(error => {
+                    status.innerText = "❌ Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền.";
                     status.className = "error";
-                }
-            })
-            .catch(error => {
-                status.innerText = "❌ Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền.";
-                status.className = "error";
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "🚀 Gửi Yêu Cầu Tư Vấn";
-                status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                })
+                .finally(() => {
+                    // Mở khóa lại form
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "🚀 Gửi Yêu Cầu Tư Vấn";
+                    formElements.forEach(el => el.disabled = false);
+                    status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
             });
-        });
+        }
     </script>
 
 </body>
