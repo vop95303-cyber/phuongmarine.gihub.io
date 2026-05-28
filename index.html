@@ -31,9 +31,36 @@
             object-fit: contain;
         }
 
-        .nav-menu { list-style: none; display: flex; gap: 20px; }
+        .nav-menu { list-style: none; display: flex; gap: 20px; align-items: center; }
         .nav-menu a { color: #ebf5fb; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; }
         .nav-menu a:hover { color: #3498db; }
+
+        /* TỐI ƯU NUT CHỌN NGÔN NGỮ Ở GÓC PHẢI */
+        .lang-selector-wrapper {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        #lang-select {
+            background-color: #2c3e50;
+            color: #fff;
+            border: 1px solid #3498db;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        #lang-select:hover {
+            border-color: #fff;
+            background-color: #34495e;
+        }
+        #lang-select option {
+            background-color: #1a252f;
+            color: #fff;
+        }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
 
@@ -91,14 +118,13 @@
             transform: scale(1.05);
         }
 
-        /* SỬA LỖI GIẬT KHUNG HÌNH SLIDER NGANG */
         @keyframes scrollHorizontal {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); } 
         }
 
-        /* Grid Sản phẩm */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        /* Grid Sản phẩm tự động thích ứng khi lên 3 sản phẩm */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
         .card { background: white; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; overflow: hidden; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
@@ -233,7 +259,6 @@
             background: #fff;
         }
         
-        /* SỬA LỖI NHẢY KHUNG HÌNH CUỘN DỌC: ĐỔI THÀNH TỊNH TIẾN CHUẨN MỘT NỬA (-50%) */
         @keyframes scrollVertical {
             0% { transform: translateY(0); }
             100% { transform: translateY(-50%); } 
@@ -244,7 +269,6 @@
         .activity-list li { padding: 14px 0; border-bottom: 1px dashed #e1e8ed; display: flex; align-items: flex-start; font-size: 15px; }
         .activity-list li:last-child { border-bottom: none; }
         
-        /* SỬA LỖI THUỘT TÍNH SAI: SHRINK -> FLEX-SHRINK */
         .badge { background: #e8f4fd; color: #3498db; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 12px; flex-shrink: 0; white-space: nowrap; width: 130px; text-align: center; }
 
         /* Vùng Liên Hệ & Form */
@@ -271,11 +295,17 @@
         /* Responsive Mobile */
         @media (max-width: 768px) {
             .nav-container { flex-direction: column; gap: 15px; padding: 15px 10px; }
-            
-            /* TỐI ƯU TEXT LOGO KHÔNG BỊ TRÀN VIỀN MOBILE */
             .logo { flex-direction: column; font-size: 15px; text-align: center; gap: 5px; }
-            
             .nav-menu { gap: 12px; flex-wrap: wrap; justify-content: center; }
+            
+            .lang-selector-wrapper {
+                margin-left: 0;
+                margin-top: 5px;
+                width: 100%;
+                justify-content: center;
+            }
+            #lang-select { padding: 6px 15px; font-size: 14px; }
+
             .slider-item { width: 160px; height: 130px; }
             .grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 26px; }
@@ -297,11 +327,19 @@
             </div>
             <nav>
                 <ul class="nav-menu">
-                    <li><a href="#san-pham">Sản Phẩm</a></li>
-                    <li><a href="#mo-hinh-3d">Mô Hình 3D</a></li>
-                    <li><a href="#du-an">Dự Án</a></li>
-                    <li><a href="#ngoai-khoa">Hoạt Động</a></li>
-                    <li><a href="#lien-he">Liên Hệ</a></li>
+                    <li><a href="#san-pham" data-i18n="nav-products">Sản Phẩm</a></li>
+                    <li><a href="#mo-hinh-3d" data-i18n="nav-models">Mô Hình 3D</a></li>
+                    <li><a href="#du-an" data-i18n="nav-projects">Dự Án</a></li>
+                    <li><a href="#ngoai-khoa" data-i18n="nav-activities">Hoạt Động</a></li>
+                    <li><a href="#lien-he" data-i18n="nav-contact">Liên Hệ</a></li>
+                    
+                    <li class="lang-selector-wrapper">
+                        <select id="lang-select" onchange="changeLanguage(this.value)">
+                            <option value="vi">🇲🇳 VI</option>
+                            <option value="en">🇬🇧 EN</option>
+                            <option value="es">🇪🇸 ES</option>
+                        </select>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -310,15 +348,15 @@
     <main>
         <section class="hero" id="tong-quan">
             <div class="container">
-                <h1>Hệ Thống Thiết Kế & Cung Cấp Tủ Điện Tàu Thủy</h1>
-                <p>Chuyên tư vấn, lên dự toán và thiết kế các loại tủ điện phân phối, tủ điện điều khiển chính xác theo tiêu chuẩn Đăng kiểm (VR) định hướng kỹ thuật tàu thủy.</p>
-                <a href="#lien-he" class="btn btn-danger" style="font-weight: bold;">Yêu Cầu Báo Giá Ngay</a>
+                <h1 data-i18n="hero-title">Hệ Thống Thiết Kế & Cung Cấp Tủ Điện Tàu Thủy</h1>
+                <p data-i18n="hero-desc">Chuyên tư vấn, lên dự toán và thiết kế các loại tủ điện phân phối, tủ điện điều khiển chính xác theo tiêu chuẩn Đăng kiểm (VR) định hướng kỹ thuật tàu thủy.</p>
+                <a href="#lien-he" class="btn btn-danger" style="font-weight: bold;" data-i18n="hero-btn">Yêu Cầu Báo Giá Ngay</a>
             </div>
         </section>
 
         <section id="san-pham">
             <div class="container">
-                <h2 class="section-title">Danh Mục Sản Phẩm Kinh Doanh</h2>
+                <h2 class="section-title" data-i18n="section-prod-title">Danh Mục Sản Phẩm Kinh Doanh</h2>
                 
                 <div class="slider-container">
                     <div class="slider-track" id="sliderTrack">
@@ -333,58 +371,46 @@
                         <div class="slider-item"><img src="image/trongnganphutai.jpg" alt="Bên trong ngăn phụ tải"></div>
                     </div>
                 </div>
-                
-                <style>
-                    /* Chỉnh sửa nhỏ lại CSS của .grid ở phần đầu trang để tự động tương thích khi lên 3 sản phẩm */
-                    .grid { 
-                        display: grid; 
-                        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-                        gap: 25px; 
-                    }
-                </style>
-                
+
                 <div class="grid">
-                    <!-- Sản phẩm 1: Hệ thống phân phối điện tổng thể -->
                     <div class="card">
                         <div class="card-content">
                             <div>
-                                <h3>Hệ Thống Phân Phối Điện Tổng Thể Tàu Thủy</h3>
-                                <p>Bao gồm trọn gói từ Tủ điện chính (Main Switchboard) tích hợp hệ thống quản lý nguồn (PMS), hòa đồng bộ tự động, bảo vệ máy phát, cho đến mạng lưới các Tủ phân phối vùng (DB), tủ phân phối chiếu sáng, điều hòa và cứu hỏa trên tàu.</p>
-                                <div class="tech-specs">⚙️ Tiêu chuẩn: IEC 60092 | Thử nghiệm Đăng kiểm VR</div>
+                                <h3 data-i18n="prod-1-title">Hệ Thống Phân Phối Điện Tổng Thể Tàu Thủy</h3>
+                                <p data-i18n="prod-1-desc">Bao gồm trọn gói từ Tủ điện chính (Main Switchboard) tích hợp hệ thống quản lý nguồn (PMS), hòa đồng bộ tự động, bảo vệ máy phát, cho đến mạng lưới các Tủ phân phối vùng (DB), tủ phân phối chiếu sáng, điều hòa và cứu hỏa trên tàu.</p>
+                                <div class="tech-specs">⚙️ <span data-i18n="spec-text">Tiêu chuẩn</span>: IEC 60092 | Thử nghiệm Đăng kiểm VR</div>
                             </div>
                             <div>
-                                <div class="price">Giá: Liên hệ khảo sát cấu hình</div>
-                                <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn">Gọi Tư Vấn Ngay</a>
+                                <div class="price" data-i18n="price-survey">Giá: Liên hệ khảo sát cấu hình</div>
+                                <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn" data-i18n="btn-consult">Gọi Tư Vấn Ngay</a>
                             </div>
                         </div>
                     </div>
-                
-                    <!-- Sản phẩm 2: Tủ điện chức năng & Điều khiển chuyên dụng -->
+                    
                     <div class="card">
                         <div class="card-content">
                             <div>
-                                <h3>Tủ Điện Chức Năng & Điều Khiển Chuyên Dụng</h3>
-                                <p>Dành cho các đơn vị có nhu cầu đặt hàng riêng lẻ hoặc nâng cấp thiết bị: Tủ điều khiển bơm/quạt khởi động trực tiếp/sao-tam giác, tủ biến tần, hệ thống báo động chung (General Alarm), tủ nạp ắc quy tự động, hoặc tủ điện đạt chuẩn IP cao chống nước biển cho boong hở.</p>
-                                <div class="tech-specs">⚙️ Cấp bảo vệ: IP22 (Buồng máy) / IP56 (Boong hở)</div>
+                                <h3 data-i18n="prod-2-title">Tủ Điện Chức Năng & Điều Khiển Chuyên Dụng</h3>
+                                <p data-i18n="prod-2-desc">Dành cho các đơn vị có nhu cầu đặt hàng riêng lẻ hoặc nâng cấp thiết bị: Tủ điều khiển bơm/quạt khởi động trực tiếp/sao-tam giác, tủ biến tần, hệ thống báo động chung (General Alarm), tủ nạp ắc quy tự động, hoặc tủ điện đạt chuẩn IP cao chống nước biển cho boong hở.</p>
+                                <div class="tech-specs">⚙️ <span data-i18n="protection-text">Cấp bảo vệ</span>: IP22 (Buồng máy) / IP56 (Boong hở)</div>
                             </div>
                             <div>
-                                <div class="price">Giá: Tùy biến theo bản vẽ thiết kế</div>
-                                <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn">Gọi Tư Vấn Ngay</a>
+                                <div class="price" data-i18n="price-design">Giá: Tùy biến theo bản vẽ thiết kế</div>
+                                <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn" data-i18n="btn-consult">Gọi Tư Vấn Ngay</a>
                             </div>
                         </div>
                     </div>
-                
-                    <!-- SẢN PHẨM MỚI 3: HỆ THỐNG PANEL & CONSOLE CABIN BUỒNG LÁI -->
+
                     <div class="card">
                         <div class="card-content">
                             <div>
-                                <h3>Hệ Thống Panel & Console Cabin Buồng Lái</h3>
-                                <p>Thiết kế và chế tạo các cụm bàn điều khiển buồng lái (Wheelhouse Control Console), panel phân phối điện cabin, bảng báo động hàng hải tập trung. Kết cấu cơ khí dạng module tiện lợi cho việc đấu nối, tích hợp màn hình radar, định vị và tay chèo điều khiển hành trình.</p>
-                                <div class="tech-specs">⚙️ Thiết kế: Ergonomics tàu thủy | Cơ khí sơn tĩnh điện cao cấp</div>
+                                <h3 data-i18n="prod-3-title">Hệ Thống Panel & Console Cabin Buồng Lái</h3>
+                                <p data-i18n="prod-3-desc">Thiết kế và chế tạo các cụm bàn điều khiển buồng lái (Wheelhouse Control Console), panel phân phối điện cabin, bảng báo động hàng hải tập trung. Kết cấu cơ khí dạng module tiện lợi cho việc đấu nối, tích hợp màn hình radar, định vị và tay chèo điều khiển hành trình.</p>
+                                <div class="tech-specs">⚙️ <span data-i18n="design-text">Thiết kế</span>: Ergonomics tàu thủy | Cơ khí sơn tĩnh điện cao cấp</div>
                             </div>
                             <div>
-                                <div class="price">Giá: Gia công theo yêu cầu tích hợp thiết bị</div>
-                                <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn">Gọi Tư Vấn Ngay</a>
+                                <div class="price" data-i18n="price-custom">Giá: Gia công theo yêu cầu tích hợp thiết bị</div>
+                                <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn" data-i18n="btn-consult">Gọi Tư Vấn Ngay</a>
                             </div>
                         </div>
                     </div>
@@ -394,68 +420,68 @@
 
         <section id="mo-hinh-3d">
             <div class="container">
-                <h2 class="section-title">Không Gian Mô Hình 3D Tương Tác</h2>
-                <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 20px;">Click vào mô hình bạn quan tâm để mở không gian tương tác 3D (xoay, phóng to, bóc tách linh kiện) trực tiếp từ bản vẽ kỹ thuật Inventor.</p>
+                <h2 class="section-title" data-i18n="title-3d">Không Gian Mô Hình 3D Tương Tác</h2>
+                <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 20px;" data-i18n="desc-3d">Click vào mô hình bạn quan tâm để mở không gian tương tác 3D (xoay, phóng to, bóc tách linh kiện) trực tiếp từ bản vẽ kỹ thuật Inventor.</p>
                 
                 <div class="grid-3d">
                     <a href="https://autode.sk/4dJTsk1" target="_blank" rel="noopener noreferrer" class="card-3d">
                         <div class="img-container-3d">
                             <img src="image/TUNAP.png" alt="Mô hình 3D Tủ Nạp">
-                            <div class="badge-3d">⟳ Xoay 3D</div>
+                            <div class="badge-3d" data-i18n="rotate-3d">⟳ Xoay 3D</div>
                         </div>
                         <div class="info-3d">
-                            <h3>Tủ Nạp Ắc Quy</h3>
-                            <span>Xem kết cấu 3D</span>
+                            <h3 data-i18n="model-1-name">Tủ Nạp Ắc Quy</h3>
+                            <span data-i18n="view-3d">Xem kết cấu 3D</span>
                         </div>
                     </a>
 
                     <a href="javascript:void(0);" class="card-3d disabled">
                         <div class="img-container-3d">
-                            <div class="badge-3d badge-waiting">⏳ Chờ update</div>
+                            <div class="badge-3d badge-waiting" data-i18n="waiting-update">⏳ Chờ update</div>
                         </div>
                         <div class="info-3d">
-                            <h3>Mô hình 3D số 2</h3>
-                            <span>Đang cấu hình...</span>
+                            <h3 data-i18n="model-2-name">Mô hình 3D số 2</h3>
+                            <span data-i18n="configuring">Đang cấu hình...</span>
                         </div>
                     </a>
 
                     <a href="javascript:void(0);" class="card-3d disabled">
                         <div class="img-container-3d">
-                            <div class="badge-3d badge-waiting">⏳ Chờ update</div>
+                            <div class="badge-3d badge-waiting" data-i18n="waiting-update">⏳ Chờ update</div>
                         </div>
                         <div class="info-3d">
-                            <h3>Mô hình 3D số 3</h3>
-                            <span>Đang cấu hình...</span>
+                            <h3 data-i18n="model-3-name">Mô hình 3D số 3</h3>
+                            <span data-i18n="configuring">Đang cấu hình...</span>
                         </div>
                     </a>
 
                     <a href="javascript:void(0);" class="card-3d disabled">
                         <div class="img-container-3d">
-                            <div class="badge-3d badge-waiting">⏳ Chờ update</div>
+                            <div class="badge-3d badge-waiting" data-i18n="waiting-update">⏳ Chờ update</div>
                         </div>
                         <div class="info-3d">
-                            <h3>Mô hình 3D số 4</h3>
-                            <span>Đang cấu hình...</span>
+                            <h3 data-i18n="model-4-name">Mô hình 3D số 4</h3>
+                            <span data-i18n="configuring">Đang cấu hình...</span>
                         </div>
                     </a>
 
                     <a href="javascript:void(0);" class="card-3d disabled">
                         <div class="img-container-3d">
-                            <div class="badge-3d badge-waiting">⏳ Chờ update</div>
+                            <div class="badge-3d badge-waiting" data-i18n="waiting-update">⏳ Chờ update</div>
                         </div>
                         <div class="info-3d">
-                            <h3>Mô hình 3D số 5</h3>
-                            <span>Đang cấu hình...</span>
+                            <h3 data-i18n="model-5-name">Mô hình 3D số 5</h3>
+                            <span data-i18n="configuring">Đang cấu hình...</span>
                         </div>
                     </a>
 
                     <a href="javascript:void(0);" class="card-3d disabled">
                         <div class="img-container-3d">
-                            <div class="badge-3d badge-waiting">⏳ Chờ update</div>
+                            <div class="badge-3d badge-waiting" data-i18n="waiting-update">⏳ Chờ update</div>
                         </div>
                         <div class="info-3d">
-                            <h3>Mô hình 3D số 6</h3>
-                            <span>Đang cấu hình...</span>
+                            <h3 data-i18n="model-6-name">Mô hình 3D số 6</h3>
+                            <span data-i18n="configuring">Đang cấu hình...</span>
                         </div>
                     </a>
                 </div>
@@ -464,28 +490,20 @@
 
         <section id="du-an">
             <div class="container">
-                <h2 class="section-title">Các Dự Án Đã Thực Hiện</h2>
+                <h2 class="section-title" data-i18n="title-projects">Các Dự Án Đã Thực Hiện</h2>
                 <div class="box-full">
                     <div class="project-marquee-container" id="projectMarquee">
                         <ul class="project-list" id="projectList">
-                            <li><span class="badge">Tàu CTT24-45</span><span>Hoàn thiện thiết kế hệ thống tủ điều khiển tích hợp cảnh báo sự cố kỹ thuật tập trung hàng hải.</span></li>
-                            <li><span class="badge">Tàu NM-46.25</span><span>Triển khai chi tiết bản vẽ thi công và bóc tách vật tư sản xuất hệ thống trạm phân phối chính.</span></li>
-                            <li><span class="badge">Tàu VSK-18.68</span><span>Thiết kế sơ đồ nguyên lý động lực và bàn giao tủ chuyển đổi nguồn tự động cho sê-ri tàu vỏ thép.</span></li>
-                            <li><span class="badge">Tàu VSK-19.66</span><span>Bố trí không gian và tối ưu trọng lượng tủ bảng điện chính cho dòng tàu khách vỏ hợp kim nhôm.</span></li>
-                            <li><span class="badge">Tàu NM128</span><span>Thiết kế kết cấu và chế tạo hệ thống tủ điện chính (Main Switchboard) tích hợp PMS cho tàu hàng tải trọng lớn.</span></li>
-                            <li><span class="badge">Tàu ES.K 140</span><span>Thiết kế bản vẽ chế tạo tủ phân phối nguồn động lực chính cho hệ thống thiết bị boong công trình.</span></li>
-                            <li><span class="badge">Tàu ESK132.02</span><span>Bóc tách khối lượng linh kiện và sản xuất cụm tủ chuyển nguồn tự động chịu dòng ngắn mạch cao.</span></li>
-                            <li><span class="badge">Tàu esk-136</span><span>Thiết kế kỹ thuật hệ thống tủ điện phân phối vùng (DB) đạt tiêu chuẩn cấp bảo vệ kín nước buồng máy.</span></li>
-                            <li><span class="badge">Tàu ESK-147</span><span>Tính toán phụ tải, lên sơ đồ nguyên lý tủ điện phân phối chiếu sáng và thông gió hành lang tàu.</span></li>
-                            <li><span class="badge">Tàu ESK-175</span><span>Tích hợp và cấu hình hệ thống quản lý năng lượng máy phát tự động, đảm bảo an toàn lưới điện.</span></li>
-                            <li><span class="badge">Tàu K-91</span><span>Thiết kế hệ thống tủ điện nạp ắc quy tự động khẩn cấp phục vụ cho các thiết bị vô tuyến điện đài tàu.</span></li>
-                            <li><span class="badge">Tàu K1814.SĐ3</span><span>Xử lý hồ sơ hoàn công, chuẩn hóa sơ đồ phân phối điện 3 pha cho các trạm nguồn dự phòng cạnh buồng lái.</span></li>
-                            <li><span class="badge">Tàu ROYAL</span><span>Thiết kế mạng lưới điện chiếu sáng mỹ thuật, hệ thống báo động chung (General Alarm) cho du thuyền.</span></li>
-                            <li><span class="badge">Tàu RP45-19</span><span>Triển khai bản vẽ tủ điều khiển khởi động sao-tam giác cho cụm bơm cứu hỏa và bơm la-tông buồng máy.</span></li>
-                            <li><span class="badge">Tàu SD24-04</span><span>Thiết kế vỏ tủ điện sơn tĩnh điện đạt tiêu chuẩn chống ăn mòn muối biển sê-ri tàu tuần tra hở boong.</span></li>
-                            <li><span class="badge">Tàu VS.K-24.45</span><span>Tích hợp đồng bộ mạch lực điều khiển hệ thống máy lái thủy lực, đáp ứng quy trình thử nghiệm Đăng kiểm VR.</span></li>
-                            <li><span class="badge">Tàu S110.KN-01</span><span>Bóc tách bản vẽ kỹ thuật CAD và bố trí tủ bảng điện phân phối khu vực sinh hoạt, buồng thủy thủ.</span></li>
-                            <li><span class="badge">Tàu S300-01</span><span>Thiết kế, chế tạo trọn gói tủ biến tần điều khiển tốc độ motor bơm ly tâm làm mát máy chính.</span></li>
+                            <li><span class="badge">Tàu CTT24-45</span><span data-i18n="proj-1">Hoàn thiện thiết kế hệ thống tủ điều khiển tích hợp cảnh báo sự cố kỹ thuật tập trung hàng hải.</span></li>
+                            <li><span class="badge">Tàu NM-46.25</span><span data-i18n="proj-2">Triển khai chi tiết bản vẽ thi công và bóc tách vật tư sản xuất hệ thống trạm phân phối chính.</span></li>
+                            <li><span class="badge">Tàu VSK-18.68</span><span data-i18n="proj-3">Thiết kế sơ đồ nguyên lý động lực và bàn giao tủ chuyển đổi nguồn tự động cho sê-ri tàu vỏ thép.</span></li>
+                            <li><span class="badge">Tàu VSK-19.66</span><span data-i18n="proj-4">Bố trí không gian và tối ưu trọng lượng tủ bảng điện chính cho dòng tàu khách vỏ hợp kim nhôm.</span></li>
+                            <li><span class="badge">Tàu NM128</span><span data-i18n="proj-5">Thiết kế kết cấu và chế tạo hệ thống tủ điện chính (Main Switchboard) tích hợp PMS cho tàu hàng tải trọng lớn.</span></li>
+                            <li><span class="badge">Tàu ES.K 140</span><span data-i18n="proj-6">Thiết kế bản vẽ chế tạo tủ phân phối nguồn động lực chính cho hệ thống thiết bị boong công trình.</span></li>
+                            <li><span class="badge">Tàu ESK132.02</span><span data-i18n="proj-7">Bóc tách khối lượng linh kiện và sản xuất cụm tủ chuyển nguồn tự động chịu dòng ngắn mạch cao.</span></li>
+                            <li><span class="badge">Tàu esk-136</span><span data-i18n="proj-8">Thiết kế kỹ thuật hệ thống tủ điện phân phối vùng (DB) đạt tiêu chuẩn cấp bảo vệ kín nước buồng máy.</span></li>
+                            <li><span class="badge">Tàu ESK-147</span><span data-i18n="proj-9">Tính toán phụ tải, lên sơ đồ nguyên lý tủ điện phân phối chiếu sáng và thông gió hành lang tàu.</span></li>
+                            <li><span class="badge">Tàu ESK-175</span><span data-i18n="proj-10">Tích hợp và cấu hình hệ thống quản lý năng lượng máy phát tự động, đảm bảo an toàn lưới điện.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -494,12 +512,12 @@
 
         <section id="ngoai-khoa">
             <div class="container">
-                <h2 class="section-title">Hoạt Động Ngoại Khoa & Phát Triển</h2>
+                <h2 class="section-title" data-i18n="title-activities">Hoạt Động Ngoại Khoa & Phát Triển</h2>
                 <div class="box-full">
                     <ul class="activity-list">
-                        <li>🔹 Nghiên cứu, ứng dụng các giải pháp mô phỏng 3D tương tác trực quan và tự động hóa thiết kế nhằm tối ưu hóa tiến độ bàn giao bản vẽ cho khách hàng.</li>
-                        <li>🔹 Trau dồi ngoại ngữ (Anh ngữ chuyên ngành kỹ thuật và Tây Ban Nha tiếp cận thị trường hàng hải quốc tế).</li>
-                        <li>🔹 Tham gia các phong trào thể thao nâng cao thể lực và rèn luyện tư duy chiến thuật đội nhóm.</li>
+                        <li data-i18n="act-1">🔹 Nghiên cứu, ứng dụng các giải pháp mô phỏng 3D tương tác trực quan và tự động hóa thiết kế nhằm tối ưu hóa tiến độ bàn giao bản vẽ cho khách hàng.</li>
+                        <li data-i18n="act-2">🔹 Trau dồi ngoại ngữ (Anh ngữ chuyên ngành kỹ thuật và Tây Ban Nha tiếp cận thị trường hàng hải quốc tế).</li>
+                        <li data-i18n="act-3">🔹 Tham gia các phong trào thể thao nâng cao thể lực và rèn luyện tư duy chiến thuật đội nhóm.</li>
                     </ul>
                 </div>
             </div>
@@ -507,10 +525,10 @@
 
         <section id="lien-he">
             <div class="container">
-                <h2 class="section-title">Liên Hệ Ngay</h2>
+                <h2 class="section-title" data-i18n="title-contact-sec">Liên Hệ Ngay</h2>
                 <div class="contact-section">
-                    <h3>Bạn cần tư vấn thiết kế hoặc nhận báo giá tủ điện tàu thủy?</h3>
-                    <p style="margin-bottom: 20px; color: #7f8c8d; max-width: 700px; margin-left: auto; margin-right: auto;">Chúng tôi luôn sẵn sàng hỗ trợ bạn bóc tách bản vẽ kỹ thuật CAD, cung cấp mô hình mô phỏng 3D trực quan để tối ưu hóa không gian bố trí, và đưa ra phương án tiết kiệm chi phí vật tư nhất.</p>
+                    <h3 data-i18n="contact-h3">Bạn cần tư vấn thiết kế hoặc nhận báo giá tủ điện tàu thủy?</h3>
+                    <p style="margin-bottom: 20px; color: #7f8c8d; max-width: 700px; margin-left: auto; margin-right: auto;" data-i18n="contact-p">Chúng tôi luôn sẵn sàng hỗ trợ bạn bóc tách bản vẽ kỹ thuật CAD, cung cấp mô hình mô phỏng 3D trực quan để tối ưu hóa không gian bố trí, và đưa ra phương án tiết kiệm chi phí vật tư nhất.</p>
                     
                     <div class="contact-grid">
                         <div class="contact-wrapper">
@@ -519,25 +537,25 @@
                                 <input type="text" name="_gotcha" style="display:none">
 
                                 <div class="form-group">
-                                    <label for="form-name">Họ và tên *</label>
+                                    <label for="form-name" data-i18n="label-name">Họ và tên *</label>
                                     <input type="text" id="form-name" name="name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="form-phone">Số điện thoại / Zalo *</label>
+                                    <label for="form-phone" data-i18n="label-phone">Số điện thoại / Zalo *</label>
                                     <input type="tel" id="form-phone" name="phone" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="form-msg">Nội dung yêu cầu *</label>
-                                    <textarea id="form-msg" name="message" rows="4" required placeholder="Ví dụ: Cần bóc tách bản vẽ và báo giá hệ thống tủ điện chính..."></textarea>
+                                    <label for="form-msg" data-i18n="label-msg">Nội dung yêu cầu *</label>
+                                    <textarea id="form-msg" name="message" rows="4" required data-i18n="placeholder-msg" placeholder="Ví dụ: Cần bóc tách bản vẽ và báo giá hệ thống tủ điện chính..."></textarea>
                                 </div>
 
                                 <div id="form-status"></div>
 
-                                <button type="submit" id="submit-btn" class="btn btn-danger" style="width: 100%; padding: 12px; font-weight: bold; display: block;">
+                                <button type="submit" id="submit-btn" class="btn btn-danger" style="width: 100%; padding: 12px; font-weight: bold; display: block;" data-i18n="btn-submit-form">
                                     🚀 Gửi Yêu Cầu Tư Vấn
                                 </button>
                             </form>
-                            <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn contact-btn">💬 Chat Qua Zalo Hoặc Gọi Trực Tiếp</a>
+                            <a href="https://zalo.me/0866097658" target="_blank" rel="noopener noreferrer" class="btn contact-btn" data-i18n="btn-zalo">💬 Chat Qua Zalo Hoặc Gọi Trực Tiếp</a>
                         </div>
                     </div>
                 </div>
@@ -549,27 +567,27 @@
                 <div style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 15px; text-align: center;">
                     
                     <div style="min-width: 150px;">
-                        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase;">• Đang xem trang</span>
+                        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase;" data-i18n="counter-lbl-online">• Đang xem trang</span>
                         <span id="counter-online" style="font-size: 24px; color: #2ecc71; font-weight: bold; text-shadow: 0 0 8px rgba(46, 204, 113, 0.3);">3</span>
                     </div>
 
                     <div style="min-width: 150px;">
-                        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase;">Hôm nay</span>
+                        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase;" data-i18n="counter-lbl-today">Hôm nay</span>
                         <span id="counter-today" style="font-size: 24px; color: #ffffff; font-weight: bold;">--</span>
                     </div>
 
                     <div style="min-width: 150px;">
-                        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase;">Tuần này</span>
+                        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase;" data-i18n="counter-lbl-week">Tuần này</span>
                         <span id="counter-week" style="font-size: 24px; color: #ffffff; font-weight: bold;">--</span>
                     </div>
 
                     <div style="min-width: 150px;">
-                        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase;">Tháng này</span>
+                        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase;" data-i18n="counter-lbl-month">Tháng này</span>
                         <span id="counter-month" style="font-size: 24px; color: #ffffff; font-weight: bold;">--</span>
                     </div>
 
                     <div style="min-width: 150px;">
-                        <span style="display: block; font-size: 11px; color: #3498db; text-transform: uppercase; font-weight: 600;">Tổng (từ 01/01/2026)</span>
+                        <span style="display: block; font-size: 11px; color: #3498db; text-transform: uppercase; font-weight: 600;" data-i18n="counter-lbl-total">Tổng (từ 01/01/2026)</span>
                         <span id="counter-total" style="font-size: 24px; color: #3498db; font-weight: bold;">--</span>
                     </div>
 
@@ -579,10 +597,11 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 KHANH HUYEN. Thiết kế hệ thống điện và cơ khí tàu thủy chuyên nghiệp.</p>
+        <p>&copy; 2026 KHANH HUYEN. <span data-i18n="footer-text">Thiết kế hệ thống điện và cơ khí tàu thủy chuyên nghiệp.</span></p>
     </footer>
 
     <script>
+        // --- LOGIC DIỄN HOẠ MARQUEE CHẠY VÔ HẠN ---
         window.addEventListener('load', function() {
             const sliderTrack = document.getElementById('sliderTrack');
             if (sliderTrack) {
@@ -595,6 +614,7 @@
             }
         });
 
+        // --- XỬ LÝ GỬI FORM ĐĂNG KÝ ---
         const form = document.getElementById("ajax-contact-form");
         const status = document.getElementById("form-status");
         const submitBtn = document.getElementById("submit-btn");
@@ -603,8 +623,9 @@
             form.addEventListener("submit", function(event) {
                 event.preventDefault(); 
                 
+                const currentLang = localStorage.getItem('kh_selected_lang') || 'vi';
                 submitBtn.disabled = true;
-                submitBtn.innerText = "⏳ Đang gửi yêu cầu...";
+                submitBtn.innerText = currentLang === 'vi' ? "⏳ Đang gửi yêu cầu..." : (currentLang === 'en' ? "⏳ Sending request..." : "⏳ Enviando solicitud...");
                 
                 const formElements = form.querySelectorAll("input, textarea");
                 formElements.forEach(el => el.disabled = true);
@@ -620,28 +641,187 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        status.innerText = "🚀 Gửi thành công! Chúng tôi sẽ liên hệ lại ngay qua Số điện thoại/Zalo.";
+                        status.innerText = currentLang === 'vi' ? "🚀 Gửi thành công! Chúng tôi sẽ liên hệ lại ngay." : (currentLang === 'en' ? "🚀 Sent successfully! We will contact you soon." : "🚀 ¡Enviado con éxito! Nos pondremos en contacto pronto.");
                         status.className = "success";
                         form.reset(); 
                         setTimeout(() => { status.className = ""; status.style.display = "none"; }, 5000);
                     } else {
-                        status.innerText = "❌ Gửi yêu cầu thất bại. Vui lòng kiểm tra lại thông tin hoặc thử lại sau.";
+                        status.innerText = currentLang === 'vi' ? "❌ Gửi thất bại. Thử lại sau." : "❌ Submission failed. Try again later.";
                         status.className = "error";
                     }
                 })
                 .catch(error => {
-                    status.innerText = "❌ Lỗi kết nối mạng. Vui lòng kiểm tra lại đường truyền.";
+                    status.innerText = "❌ Network error.";
                     status.className = "error";
                 })
                 .finally(() => {
                     submitBtn.disabled = false;
-                    submitBtn.innerText = "🚀 Gửi Yêu Cầu Tư Vấn";
+                    submitBtn.innerText = currentLang === 'vi' ? "🚀 Gửi Yêu Cầu Tư Vấn" : (currentLang === 'en' ? "🚀 Submit Request" : "🚀 Enviar Solicitud");
                     formElements.forEach(el => el.disabled = false);
                     status.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 });
             });
         }
 
+        // --- CƠ SỞ DỮ LIỆU ĐA NGÔN NGỮ (DICTIONARY) ---
+        const resources = {
+            vi: {
+                "nav-products": "Sản Phẩm", "nav-models": "Mô Hình 3D", "nav-projects": "Dự Án", "nav-activities": "Hoạt Động", "nav-contact": "Liên Hệ",
+                "hero-title": "Hệ Thống Thiết Kế & Cung Cấp Tủ Điện Tàu Thủy",
+                "hero-desc": "Chuyên tư vấn, lên dự toán và thiết kế các loại tủ điện phân phối, tủ điện điều khiển chính xác theo tiêu chuẩn Đăng kiểm (VR) định hướng kỹ thuật tàu thủy.",
+                "hero-btn": "Yêu Cầu Báo Giá Ngay", "section-prod-title": "Danh Mục Sản Phẩm Kinh Doanh",
+                "prod-1-title": "Hệ Thống Phân Phối Điện Tổng Thể Tàu Thủy",
+                "prod-1-desc": "Bao gồm trọn gói từ Tủ điện chính (Main Switchboard) tích hợp hệ thống quản lý nguồn (PMS), hòa đồng bộ tự động, bảo vệ máy phát, cho đến mạng lưới các Tủ phân phối vùng (DB), tủ phân phối chiếu sáng, điều hòa và cứu hỏa trên tàu.",
+                "spec-text": "Tiêu chuẩn", "price-survey": "Giá: Liên hệ khảo sát cấu hình", "btn-consult": "Gọi Tư Vấn Ngay",
+                "prod-2-title": "Tủ Điện Chức Năng & Điều Khiển Chuyên Dụng",
+                "prod-2-desc": "Dành cho các đơn vị có nhu cầu đặt hàng riêng lẻ hoặc nâng cấp thiết bị: Tủ điều khiển bơm/quạt khởi động trực tiếp/sao-tam giác, tủ biến tần, hệ thống báo động chung (General Alarm), tủ nạp ắc quy tự động, hoặc tủ điện đạt chuẩn IP cao chống nước biển cho boong hở.",
+                "protection-text": "Cấp bảo vệ", "price-design": "Giá: Tùy biến theo bản vẽ thiết kế",
+                "prod-3-title": "Hệ Thống Panel & Console Cabin Buồng Lái",
+                "prod-3-desc": "Thiết kế và chế tạo các cụm bàn điều khiển buồng lái (Wheelhouse Control Console), panel phân phối điện cabin, bảng báo động hàng hải tập trung. Kết cấu cơ khí dạng module tiện lợi cho việc đấu nối, tích hợp màn hình radar, định vị và tay chèo điều khiển hành trình.",
+                "design-text": "Thiết kế", "price-custom": "Giá: Gia công theo yêu cầu tích hợp thiết bị",
+                "title-3d": "Không Gian Mô Hình 3D Tương Tác", "desc-3d": "Click vào mô hình bạn quan tâm để mở không gian tương tác 3D (xoay, phóng to, bóc tách linh kiện) trực tiếp từ bản vẽ kỹ thuật Inventor.",
+                "rotate-3d": "⟳ Xoay 3D", "model-1-name": "Tủ Nạp Ắc Quy", "view-3d": "Xem kết cấu 3D", "waiting-update": "⏳ Chờ update", "configuring": "Đang cấu hình...",
+                "title-projects": "Các Dự Án Đã Thực Hiện", "title-activities": "Hoạt Động Ngoại Khoa & Phát Triển",
+                "title-contact-sec": "Liên Hệ Ngay", "contact-h3": "Bạn cần tư vấn thiết kế hoặc nhận báo giá tủ điện tàu thủy?",
+                "contact-p": "Chúng tôi luôn sẵn sàng hỗ trợ bạn bóc tách bản vẽ kỹ thuật CAD, cung cấp mô hình mô phỏng 3D trực quan để tối ưu hóa không gian bố trí, và đưa ra phương án tiết kiệm chi phí vật tư nhất.",
+                "label-name": "Họ và tên *", "label-phone": "Số điện thoại / Zalo *", "label-msg": "Nội dung yêu cầu *",
+                "placeholder-msg": "Ví dụ: Cần bóc tách bản vẽ và báo giá hệ thống tủ điện chính...", "btn-submit-form": "🚀 Gửi Yêu Cầu Tư Vấn", "btn-zalo": "💬 Chat Qua Zalo Hoặc Gọi Trực Tiếp",
+                "counter-lbl-online": "• Đang xem trang", "counter-lbl-today": "Hôm nay", "counter-lbl-week": "Tuần này", "counter-lbl-month": "Tháng này", "counter-lbl-total": "Tổng (từ 01/01/2026)",
+                "footer-text": "Thiết kế hệ thống điện và cơ khí tàu thủy chuyên nghiệp.",
+                "proj-1": "Hoàn thiện thiết kế hệ thống tủ điều khiển tích hợp cảnh báo sự cố kỹ thuật tập trung hàng hải.",
+                "proj-2": "Triển khai chi tiết bản vẽ thi công và bóc tách vật tư sản xuất hệ thống trạm phân phối chính.",
+                "proj-3": "Thiết kế sơ đồ nguyên lý động lực và bàn giao tủ chuyển đổi nguồn tự động cho sê-ri tàu vỏ thép.",
+                "proj-4": "Bố trí không gian và tối ưu trọng lượng tủ bảng điện chính cho dòng tàu khách vỏ hợp kim nhôm.",
+                "proj-5": "Thiết kế kết cấu và chế tạo hệ thống tủ điện chính (Main Switchboard) tích hợp PMS cho tàu hàng tải trọng lớn.",
+                "proj-6": "Thiết kế bản vẽ chế tạo tủ phân phối nguồn động lực chính cho hệ thống thiết bị boong công trình.",
+                "proj-7": "Bóc tách khối lượng linh kiện và sản xuất cụm tủ chuyển nguồn tự động chịu dòng ngắn mạch cao.",
+                "proj-8": "Thiết kế kỹ thuật hệ thống tủ điện phân phối vùng (DB) đạt tiêu chuẩn cấp bảo vệ kín nước buồng máy.",
+                "proj-9": "Tính toán phụ tải, lên sơ đồ nguyên lý tủ điện phân phối chiếu sáng và thông gió hành lang tàu.",
+                "proj-10": "Tích hợp và cấu hình hệ thống quản lý năng lượng máy phát tự động, đảm bảo an toàn lưới điện.",
+                "act-1": "🔹 Nghiên cứu, ứng dụng các giải pháp mô phỏng 3D tương tác trực quan và tự động hóa thiết kế nhằm tối ưu hóa tiến độ bàn giao bản vẽ cho khách hàng.",
+                "act-2": "🔹 Trau dồi ngoại ngữ (Anh ngữ chuyên ngành kỹ thuật và Tây Ban Nha tiếp cận thị trường hàng hải quốc tế).",
+                "act-3": "🔹 Tham gia các phong trào thể thao nâng cao thể lực và rèn luyện tư duy chiến thuật đội nhóm."
+            },
+            en: {
+                "nav-products": "Products", "nav-models": "3D Models", "nav-projects": "Projects", "nav-activities": "Activities", "nav-contact": "Contact",
+                "hero-title": "Marine Electrical Switchboard Design & Supply",
+                "hero-desc": "Specializing in consulting, budgeting, and designing distribution and control switchboards strictly complying with Marine Classification Society (VR) standards.",
+                "hero-btn": "Request A Quote Now", "section-prod-title": "Our Product Portfolio",
+                "prod-1-title": "Total Marine Electrical Distribution System",
+                "prod-1-desc": "Comprehensive solution from Main Switchboards integrated with Power Management Systems (PMS), auto-synchronization, generator protection, to Distribution Boards (DB), lighting, air conditioning, and fire-fighting distribution networks.",
+                "spec-text": "Standard", "price-survey": "Price: Contact for configuration survey", "btn-consult": "Contact Consultant",
+                "prod-2-title": "Specialized Functional & Control Switchboards",
+                "prod-2-desc": "Designed for specific machinery or retrofitting needs: Pump/Fan starters (DOL/Star-Delta), Variable Frequency Drive (VFD) panels, General Alarm systems, automatic battery chargers, or high IP-rated weatherproof enclosures for open decks.",
+                "protection-text": "Protection Class", "price-design": "Price: Customized based on drawings",
+                "prod-3-title": "Cabin Panel & Navigation Console System",
+                "prod-3-desc": "Design and manufacture of Wheelhouse Control Consoles, cabin distribution panels, and centralized marine alarm panels. Modular mechanical structure optimized for easy wiring and integration of radar displays, navigation instruments, and propulsion levers.",
+                "design-text": "Design", "price-custom": "Price: Custom fabrication upon integration requirement",
+                "title-3d": "Interactive 3D Model Workspace", "desc-3d": "Click on a model to open the interactive 3D workspace (rotate, zoom, explode components) directly from original Inventor technical designs.",
+                "rotate-3d": "⟳ Rotate 3D", "model-1-name": "Battery Charger Panel", "view-3d": "View 3D Structure", "waiting-update": "⏳ Pending", "configuring": "Configuring...",
+                "title-projects": "Executed Projects Portfolio", "title-activities": "Extracurricular Activities & Development",
+                "title-contact-sec": "Contact Us Now", "contact-h3": "Need technical consultation or switchboard budgeting?",
+                "contact-p": "We are fully equipped to assist you with CAD blueprint estimation, intuitive 3D space optimization simulation, and cost-efficient material planning solutions.",
+                "label-name": "Full Name *", "label-phone": "Phone / WhatsApp *", "label-msg": "Your Message *",
+                "placeholder-msg": "E.g., Need blueprint technical estimation and quotation for Main Switchboard...", "btn-submit-form": "🚀 Submit Consultation Request", "btn-zalo": "💬 Chat via WhatsApp / Call Direct",
+                "counter-lbl-online": "• Users Online", "counter-lbl-today": "Today", "counter-lbl-week": "This Week", "counter-lbl-month": "This Month", "counter-lbl-total": "Total Visits (Since 2026)",
+                "footer-text": "Professional Marine Electrical & Mechanical Systems Engineering.",
+                "proj-1": "Finalized control switchboard design integrated with centralized marine technical alarm systems.",
+                "proj-2": "Executed detailed shop-drawings and material takeoff for main distribution switchboard manufacturing.",
+                "proj-3": "Designed electrical line diagrams and delivered Automatic Transfer Switches (ATS) for steel hull vessels series.",
+                "proj-4": "Arranged space allocation and optimized switchboard weight for aluminum hull passenger fast ferries.",
+                "proj-5": "Engineered structures and manufactured Main Switchboards integrated with PMS for large deadweight cargo ships.",
+                "proj-6": "Developed manufacturing drawings for main power distribution units serving heavy deck machinery equipment.",
+                "proj-7": "Conducted bill of materials estimation and assembled high short-circuit current resilient ATS panels.",
+                "proj-8": "Technical design of distribution boards (DB) meeting absolute watertight requirements inside engine rooms.",
+                "proj-9": "Calculated load analysis, electrical load charts, and engineered layout for corridor ventilation and lighting panels.",
+                "proj-10": "Integrated and programmed automatic power management systems (PMS) to safeguard grid distribution stability.",
+                "act-1": "🔹 Researching and implementing interactive 3D visualization and automated design macros to accelerate blueprint turnaround time.",
+                "act-2": "🔹 Enhancing language skills (Technical English and Spanish to access international maritime markets).",
+                "act-3": "🔹 Participating in sports activities to enhance physical endurance and cultivate team tactical thinking."
+            },
+            es: {
+                "nav-products": "Productos", "nav-models": "Modelos 3D", "nav-projects": "Proyectos", "nav-activities": "Actividades", "nav-contact": "Contacto",
+                "hero-title": "Diseño y Suministro de Cuadros Eléctricos Marinos",
+                "hero-desc": "Especialistas en consultoría, presupuestos y diseño de cuadros eléctricos de distribución y control según las normas de la Sociedad de Clasificación Marina (VR).",
+                "hero-btn": "Solicite Presupuesto Ya", "section-prod-title": "Nuestra Gama de Productos",
+                "prod-1-title": "Sistema Integral de Distribución Eléctrica Marina",
+                "prod-1-desc": "Solución completa desde Cuadros Eléctricos Principales (Main Switchboard) con Sistemas de Gestión de Energía (PMS), sincronización automática, protección de generadores, hasta paneles de distribución secundaria (DB), iluminación y climatización.",
+                "spec-text": "Normativa", "price-survey": "Precio: Contáctenos para relevamiento técnico", "btn-consult": "Contactar Asesor",
+                "prod-2-title": "Cuadros Eléctricos de Control Especializados",
+                "prod-2-desc": "Para maquinaria específica o modernización: Arrancadores de bombas/ventiladores (Estrella-Triángulo), paneles con variadores de frecuencia (VFD), sistemas de Alarma General, cargadores automáticos de baterías o armarios estancos de alto grado IP para cubiertas abiertas.",
+                "protection-text": "Grado IP", "price-design": "Precio: Personalizado según planos",
+                "prod-3-title": "Sistema de Consola de Navegación y Paneles de Cabina",
+                "prod-3-desc": "Diseño y fabricación de consolas de control para el puente de mando (Wheelhouse Control Console), paneles de distribución de cabina y sistemas centralizados de alarma marina. Estructura modular metálica óptima para integración de radares y mandos de propulsión.",
+                "design-text": "Diseño", "price-custom": "Precio: Fabricación a medida según integración",
+                "title-3d": "Espacio de Modelado 3D Interactivo", "desc-3d": "Haga clic en un modelo para abrir el visor interactivo 3D (rotar, ampliar, despiezar componentes) directo desde los planos técnicos de Inventor.",
+                "rotate-3d": "⟳ Rotar 3D", "model-1-name": "Cuadro de Carga de Baterías", "view-3d": "Ver Estructura 3D", "waiting-update": "⏳ Pendiente", "configuring": "Configurando...",
+                "title-projects": "Portafolio de Proyectos Ejecutados", "title-activities": "Actividades de Desarrollo y Crecimiento",
+                "title-contact-sec": "Contáctenos Hoy Mismo", "contact-h3": "¿Necesita asesoría técnica o presupuesto para cuadros eléctricos?",
+                "contact-p": "Estamos preparados para ayudarle con la estimación de planos CAD, simulación de optimización espacial en 3D y planificación eficiente de materiales.",
+                "label-name": "Nombre y Apellido *", "label-phone": "Teléfono / WhatsApp *", "label-msg": "Detalle de Solicitud *",
+                "placeholder-msg": "Ej: Requiero análisis de planos y cotización para Cuadro Eléctrico Principal...", "btn-submit-form": "🚀 Enviar Solicitud de Consulta", "btn-zalo": "💬 Chat por WhatsApp / Llamada Directa",
+                "counter-lbl-online": "• Usuarios en Línea", "counter-lbl-today": "Hoy", "counter-lbl-week": "Esta Semana", "counter-lbl-month": "Este Mes", "counter-lbl-total": "Visitas Totales (Desde 2026)",
+                "footer-text": "Ingeniería Profesional en Sistemas Eléctricos y Mecánicos Marítimos.",
+                "proj-1": "Diseño finalizado de cuadro de control integrado con sistemas centralizados de alarmas técnicas marinas.",
+                "proj-2": "Elaboración de planos de detalle de taller y cómputo de materiales para fabricación de cuadro de distribución principal.",
+                "proj-3": "Diseño de diagramas unifilares y entrega de interruptores de transferencia automática (ATS) para serie de buques de acero.",
+                "proj-4": "Optimización de distribución de espacios y reducción de peso de cuadros eléctricos para catamaranes de pasajeros de aluminio.",
+                "proj-5": "Ingeniería estructural y construcción de Cuadros Eléctricos Principales con PMS para buques de carga de gran tonelaje.",
+                "proj-6": "Desarrollo de planos constructivos para unidades de distribución de energía destinadas a maquinaria pesada de cubierta.",
+                "proj-7": "Cómputo de materiales y ensamblaje de paneles ATS de alta resistencia a corrientes de cortocircuito.",
+                "proj-8": "Diseño técnico de tableros de distribución (DB) con requisitos estancos absolutos para salas de máquinas.",
+                "proj-9": "Análisis de balance de cargas y diseño de planos de distribución para iluminación y ventilación de acomodaciones.",
+                "proj-10": "Integración y programación de sistemas de gestión de energía (PMS) para salvaguardar la estabilidad de la red eléctrica.",
+                "act-1": "🔹 Investigación y aplicación de soluciones de modelado 3D interactivo y macros de automatización para optimizar la entrega de planos.",
+                "act-2": "🔹 Fortalecimiento de idiomas (Inglés técnico y Español enfocado al mercado marítimo internacional).",
+                "act-3": "🔹 Participación en actividades deportivas para mejorar la resistencia física y cultivar el pensamiento táctico en equipo."
+            }
+        };
+
+        // --- CẬP NHẬT GIAO DIỆN THEO NGÔN NGỮ ---
+        function updateContent(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (resources[lang] && resources[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        if(element.hasAttribute('placeholder')) {
+                            element.setAttribute('placeholder', resources[lang][key]);
+                        }
+                    } else {
+                        element.textContent = resources[lang][key];
+                    }
+                }
+            });
+            document.getElementById('lang-select').value = lang;
+            document.documentElement.lang = lang;
+        }
+
+        function changeLanguage(lang) {
+            localStorage.setItem('kh_selected_lang', lang);
+            updateContent(lang);
+        }
+
+        // --- KHỞI TẠO ĐA NGÔN NGỮ THÍCH ỨNG ---
+        function initInternationalization() {
+            const savedLang = localStorage.getItem('kh_selected_lang');
+            if (savedLang) {
+                updateContent(savedLang);
+            } else {
+                const browserLang = navigator.language || navigator.userLanguage;
+                let defaultLang = 'vi'; 
+                if (browserLang.startsWith('en')) {
+                    defaultLang = 'en';
+                } else if (browserLang.startsWith('es')) {
+                    defaultLang = 'es';
+                }
+                updateContent(defaultLang);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', initInternationalization);
+
+        // --- BỘ ĐẾM TRUY CẬP HỆ THỐNG ---
         function initTrafficCounter() {
             const startDate = new Date('2026-01-01T00:00:00');
             const now = new Date();
