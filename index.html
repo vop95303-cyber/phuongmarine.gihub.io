@@ -66,9 +66,9 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
 
-        /* Hero Section */
+        /* Hero Section - Đã sửa lỗi sai tên thư mục images thành image */
         .hero { 
-            background: linear-gradient(rgba(26, 37, 47, 0.85), rgba(44, 62, 80, 0.85)), url('images/hero-bg.jpg') no-repeat center center/cover; 
+            background: linear-gradient(rgba(26, 37, 47, 0.85), rgba(44, 62, 80, 0.85)), url('image/hero-bg.jpg') no-repeat center center/cover; 
             color: white; 
             padding: 100px 0; 
             text-align: center; 
@@ -328,7 +328,7 @@
         <div class="nav-container">
             <div class="logo">
                 <img src="image/logo.jpg" alt="Logo KHANH HUYEN" width="35" height="35">
-                CÔNG TY CP THƯƠNG MẠI VÀ SẢN XUẤT KHÁNH HUYỀN
+                <span data-i18n="company-name">CÔNG TY CP THƯƠNG MẠI VÀ SẢN XUẤT KHÁNH HUYỀN</span>
             </div>
             <nav>
                 <ul class="nav-menu">
@@ -519,11 +519,11 @@
             <div class="container">
                 <h2 class="section-title" data-i18n="title-activities">Hoạt Động Ngoại Khoa & Phát Triển</h2>
                 <div class="box-full">
-                    <ul class="activity-list">
+                    <div class="activity-list">
                         <li>🔹 <span data-i18n="act-1">Nghiên cứu, ứng dụng các giải pháp mô phỏng 3D tương tác trực quan và tự động hóa thiết kế nhằm tối ưu hóa tiến độ bàn giao bản vẽ cho khách hàng.</span></li>
                         <li>🔹 <span data-i18n="act-2">Trau dồi ngoại ngữ (Anh ngữ chuyên ngành kỹ thuật và Tây Ban Nha tiếp cận thị trường hàng hải quốc tế).</span></li>
                         <li>🔹 <span data-i18n="act-3">Tham gia các phong trào thể thao nâng cao thể lực và rèn luyện tư duy chiến thuật đội nhóm.</span></li>
-                    </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -601,16 +601,17 @@
         <p>&copy; 2026 KHANH HUYEN. <span data-i18n="footer-text">Thiết kế hệ thống điện và cơ khí tàu thủy chuyên nghiệp.</span></p>
     </footer>
     
-        <script>
+    <script>
         // --- KHAI BÁO BIẾN DOM TẬP TRUNG ---
         let sliderTrack, projectList, contactForm, formStatus, submitBtn, phoneInput, fullPhoneInput, onlineElement;
         let iti;
         let currentFormStatusKey = "";
         let isMarqueeInitialized = false;
     
-        // --- DICTIONARY ĐA NGÔN NGỮ ---
+        // --- DICTIONARY ĐA NGÔN NGỮ (ĐÃ BỔ SUNG KEYcompany-name CHO CẢ 3 NGÔN NGỮ) ---
         const resources = {
             vi: {
+                "company-name": "CÔNG TY CP THƯƠNG MẠI VÀ SẢN XUẤT KHÁNH HUYỀN",
                 "nav-products": "Sản Phẩm", "nav-models": "Mô Hình 3D", "nav-projects": "Dự Án", "nav-activities": "Hoạt Động", "nav-contact": "Liên Hệ",
                 "hero-title": "Hệ Thống Thiết Kế & Cung Cấp Tủ Điện Tàu Thủy",
                 "hero-desc": "Chuyên tư vấn, lên dự toán và thiết kế các loại tủ điện phân phối, tủ điện điều khiển chính xác theo tiêu chuẩn Đăng kiểm (VR) định hướng kỹ thuật tàu thủy.",
@@ -649,6 +650,7 @@
                 "msg-sending": "⏳ Đang gửi yêu cầu...", "msg-success": "🚀 Gửi thành công! Chúng tôi sẽ liên hệ lại ngay.", "msg-failed": "❌ Gửi thất bại. Thử lại sau."
             },
             en: {
+                "company-name": "KHANH HUYEN TRADING & MANUFACTURING JSC",
                 "nav-products": "Products", "nav-models": "3D Models", "nav-projects": "Projects", "nav-activities": "Activities", "nav-contact": "Contact",
                 "hero-title": "Marine Electrical Switchboard Design & Supply",
                 "hero-desc": "Specializing in consulting, budgeting, and designing distribution and control switchboards strictly complying with Marine Classification Society (VR) standards.",
@@ -687,9 +689,10 @@
                 "msg-sending": "⏳ Sending request...", "msg-success": "🚀 Sent successfully! We will contact you soon.", "msg-failed": "❌ Submission failed. Try again later."
             },
             es: {
+                "company-name": "S.A. DE COMERCIO Y PRODUCCIÓN KHANH HUYEN",
                 "nav-products": "Productos", "nav-models": "Modelos 3D", "nav-projects": "Proyectos", "nav-activities": "Actividades", "nav-contact": "Contacto",
                 "hero-title": "Diseño y Suministro de Cuadros Eléctricos Marinos",
-                "hero-desc": "Especialistas en consultoría, presupuestos y diseño de cuadros eléctricos de distribución y control según las normas de la Sociedad de Clasificación Marina (VR).",
+                "hero-desc": "Especialistas en consultoría, presupuestos y diseño de cuadros eléctricos de distribución và control según las normas de la Sociedad de Clasificación Marina (VR).",
                 "hero-btn": "Solicite Presupuesto Ya", "section-prod-title": "Nuestra Gama de Productos",
                 "prod-1-title": "Sistema Integral de Distribución Eléctrica Marina",
                 "prod-1-desc": "Solución completa desde Cuadros Eléctricos Principales (Main Switchboard) con Sistemas de Gestión de Energía (PMS), sincronización automática, protección de generadores, hasta paneles de distribución secundaria (DB), iluminación y climatización.",
@@ -883,7 +886,7 @@
                 localStorage.setItem('kh_today_visits', parseInt(localStorage.getItem('kh_today_visits')) + 1);
             }
     
-            const totalVisits = parseInt(localStorage.getItem('kh_total_visits'));
+            const totalVisVisits = parseInt(localStorage.getItem('kh_total_visits'));
             const todayVisits = parseInt(localStorage.getItem('kh_today_visits'));
     
             const counterToday = document.getElementById('counter-today');
@@ -894,7 +897,7 @@
             if(counterToday) counterToday.innerText = todayVisits.toLocaleString();
             if(counterWeek) counterWeek.innerText = (todayVisits + Math.floor(avgVisitsPerDay * 4.3)).toLocaleString();
             if(counterMonth) counterMonth.innerText = (todayVisits + Math.floor(avgVisitsPerDay * 22.5)).toLocaleString();
-            if(counterTotal) counterTotal.innerText = totalVisits.toLocaleString();
+            if(counterTotal) counterTotal.innerText = totalVisVisits.toLocaleString();
     
             function updateOnlineStatus() {
                 if(onlineElement) {
